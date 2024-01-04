@@ -47,17 +47,17 @@ class VendingMachine(models.Model):
     location = models.CharField(max_length=255)
 
 class Stock(models.Model):
-    machine = models.OneToOneField(VendingMachine)
-    item = models.OneToOneField(Item)
+    machine = models.OneToOneField(VendingMachine, on_delete=models.CASCADE)
+    item = models.OneToOneField(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
 class Order(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    machine = models.OneToOneField(VendingMachine)
-    item = models.OneToOneField(Item)
+    machine = models.OneToOneField(VendingMachine, on_delete=models.CASCADE)
+    item = models.OneToOneField(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     date = models.DateField()
 
 class Favorites(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    item = models.OneToOneField(Item)
+    item = models.OneToOneField(Item, on_delete=models.CASCADE)
