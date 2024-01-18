@@ -1,18 +1,20 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Register{% endblock %}
 {% block extra %}
-<script src="/register.js" defer></script>
-<script src="/bootstrapValidation.js" defer></script>
+<script src="{% static 'js/register.js' %}" defer></script>
+<script src="{% static 'js/bootstrapValidation.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-	{% if error === "1" %}<div class="alert alert-danger">Your username cannot be empty!</div>{% endif %}
-	{% if error === "2" %}<div class="alert alert-danger">Your password cannot be empty!</div>{% endif %}
-	{% if error === "3" %}<div class="alert alert-danger">The passwords you provided don't match!</div>{% endif %}
-	{% if error === "4" %}<div class="alert alert-danger">That username is already taken!</div>{% endif %}
+	{% if error == "1" %}<div class="alert alert-danger">Your username cannot be empty!</div>{% endif %}
+	{% if error == "2" %}<div class="alert alert-danger">Your password cannot be empty!</div>{% endif %}
+	{% if error == "3" %}<div class="alert alert-danger">The passwords you provided don't match!</div>{% endif %}
+	{% if error == "4" %}<div class="alert alert-danger">That username is already taken!</div>{% endif %}
 	<form action="/register" method="post" class="needs-validation" novalidate>
+		{% csrf_token %}
 		<div class="input-group mb-2">
 			<span class="input-group-text">Username</span>
 			<input type="text" name="username" class="form-control" required>

@@ -1,19 +1,21 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Login{% endblock %}
 {% block extra %}
-<script src="/bootstrapValidation.js" defer></script>
+<script src="{% static 'js/bootstrapValidation.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-	{% if error === "1" %}<div class="alert alert-danger">Your username cannot be empty!</div>{% endif %}
-	{% if error === "2" %}<div class="alert alert-danger">Your password cannot be empty!</div>{% endif %}
-	{% if error === "3" %}<div class="alert alert-danger">The provided username doesn't exist!</div>{% endif %}
-	{% if error === "4" %}<div class="alert alert-danger">The password you provided is invalid!</div>{% endif %}
-	{% if error === "5" %}<div class="alert alert-danger">You must be logged in to do that.</div>{% endif %}
+	{% if error == "1" %}<div class="alert alert-danger">Your username cannot be empty!</div>{% endif %}
+	{% if error == "2" %}<div class="alert alert-danger">Your password cannot be empty!</div>{% endif %}
+	{% if error == "3" %}<div class="alert alert-danger">The provided username doesn't exist!</div>{% endif %}
+	{% if error == "4" %}<div class="alert alert-danger">The password you provided is invalid!</div>{% endif %}
+	{% if error == "5" %}<div class="alert alert-danger">You must be logged in to do that.</div>{% endif %}
 	{% if isRegistrationSuccessful %}<div class="alert alert-success">Successfully registered an account! Now just login with your new credentials.</div>{% endif %}
 	<form action="/login" method="post" class="needs-validation" novalidate>
+		{% csrf_token %}
 		<div class="input-group mb-2">
 			<span class="input-group-text">Username</span>
 			<input type="text" name="username" class="form-control" required>
