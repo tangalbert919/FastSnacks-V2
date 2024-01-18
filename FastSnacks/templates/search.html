@@ -1,0 +1,63 @@
+{# Search (with category) #}
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+{% block content %}
+{% if hasQuery %}
+<h2 class="text-center">Query: {{query}}</h2>
+<div class="row border border-dark rounded">
+	<div class="col border-end border-dark">
+		<h2 class="text-center">Snacks</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Snack</th>
+					<th scope="col">Price</th>
+					<th scope="col">Calories</th>
+					<th scope="col">Carb</th>
+					<th scope="col">Fat</th>
+					<th scope="col">Protein</th>
+					<th scope="col">Sugar</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in snacks %}
+				<tr>
+					<td>{{item.name}}</td>
+					<td>{{item.price}}</td>
+					<td>{{item.calories}}</td>
+					<td>{{item.carb}}</td>
+					<td>{{item.fat}}</td>
+					<td>{{item.protein}}</td>
+					<td>{{item.sugar}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="col border-bottom">
+		<h2 class="text-center">Vending Machines</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Location</th>
+					<th scope="col">Snack</th>
+					<th scope="col">Quantity</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in vending %}
+				<tr>
+					<td>{{item.machine}}</td>
+					<td>{{item.snack}}</td>
+					<td>{{item.quantity}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% else %}
+<div class="alert alert-danger">The search query was empty!</div>
+{% endif %}
+{% endblock %}

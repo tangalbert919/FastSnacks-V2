@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+{% block extra %}
+<script src="/bootstrapValidation.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	{% if error === "1" %}<div class="alert alert-danger">Your username cannot be empty!</div>{% endif %}
+	{% if error === "2" %}<div class="alert alert-danger">Your password cannot be empty!</div>{% endif %}
+	{% if error === "3" %}<div class="alert alert-danger">The provided username doesn't exist!</div>{% endif %}
+	{% if error === "4" %}<div class="alert alert-danger">The password you provided is invalid!</div>{% endif %}
+	{% if error === "5" %}<div class="alert alert-danger">You must be logged in to do that.</div>{% endif %}
+	{% if isRegistrationSuccessful %}<div class="alert alert-success">Successfully registered an account! Now just login with your new credentials.</div>{% endif %}
+	<form action="/login" method="post" class="needs-validation" novalidate>
+		<div class="input-group mb-2">
+			<span class="input-group-text">Username</span>
+			<input type="text" name="username" class="form-control" required>
+			<div class="invalid-feedback text-center">Your username cannot be empty!</div>
+		</div>
+		<div class="input-group mb-2">
+			<span class="input-group-text" id="basic-addon2">Password</span>
+			<input type="password" name="password" class="form-control" required>
+			<div class="invalid-feedback text-center">Your password cannot be empty!</div>
+		</div>
+		<button class="btn btn-primary d-block mx-auto mb-2">Login</button>
+	</form>
+	<div class="alert alert-info">Don't have an account? Click <a href="/register">here</a> to register.</div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Favorites{% endblock %}
+
+{% block content %}
+<div class="container">
+	{% for item in snacks %}
+	<div class="row d-flex border border-dark rounded align-items-center mb-2">
+		<div class="col-1 border-end border-dark">
+			<img src="{{item.icon}}" class="w-100 p-2">
+		</div>
+		<div class="col py-2">
+			<h2>{{item.name}}</h2>
+			<p>{{item.price}}</p>
+		</div>
+		<form action="/favorites-remove" method="post" class="w-25">
+			<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">
+			<button class="btn btn-outline-secondary col-auto m-4 text-danger"
+				data-bs-toggle="tooltip"
+				data-bs-placement="bottom"
+				data-bs-custom-class="custom-tooltip"
+				data-bs-title="Unfavorite"
+			>
+				<i data-feather="trash-2"></i>
+			</button>
+		</form>
+	</div>
+	{% else %}
+	<p>No favorite snacks yet.</p>
+	{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Transaction History{% endblock %}
+{% block content %}
+{# This webpage shows the recent transaction history of the user #}
+<div class="history-container">
+    <div class="header">
+      <h2>Transaction History: {{username}}</h2>
+    </div>
+    <div>
+      <div class="balances">
+        {# This shows the user's account balance and how much they can spend #}
+        <div class="account-balance">
+          <span class="label">Current Balance</span>
+          <span class="dots"></span>
+          <span class="amount">$100.00</span>
+        </div>
+        <div class="account-balance">
+          <span class="label">Available Balance</span>
+          <span class="dots"></span>
+          <span class="amount">$100.00</span>
+        </div>
+      </div>
+      <div class="transactions">
+        <h3>Recent Activity</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          {# This shows all the recent purchases made by the user #}
+          <tbody>
+            {% for item in list %}
+            <tr class="transaction-row">
+              <td class="transaction-date">{{item.date}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.quantity}}</td>
+              <td class="transaction-amount">${{item.price}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+    </div>
+  </div>
+{% endblock %}
