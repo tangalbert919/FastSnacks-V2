@@ -14,7 +14,7 @@
 				</div>
 				<div class="col py-2">
 					<h3>{{item.name}}</h3>
-					<p>{{item.price}} | Calories: {{item.calories}} | Carbs: {{item.carb}} | Fat: {{item.fat}} | Protein: {{item.protein}} | Sugar: {{item.sugar}}</p>
+					<p>${{item.price}} | Calories: {{item.calories}} | Carbs: {{item.carbs}} | Fat: {{item.fat}} | Protein: {{item.protein}} | Sugar: {{item.sugar}}</p>
 				</div>
 				<form action="/favorites-add" method="post" class="w-25">
 					<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">

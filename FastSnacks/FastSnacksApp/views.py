@@ -1,11 +1,13 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Favorites
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import *
 
 # Create your views here.
 # TODO: Have all views inherit this class
@@ -69,12 +71,57 @@ class RegisterView(TemplateView):
         except:
             return render(request, "register.html", context={'error': '4'})
 
-class FavoritesView(BaseView, ListView):
-    queryset = Favorites.objects.all()
+class FavoritesView(LoginRequiredMixin, BaseView, ListView):
     template_name = "favorites.html"
 
-    def get(self, request):
-        if request.user.is_authenticated:
-            return HttpResponse("authenticated")
-        else:
-            return HttpResponse("not authenticated")
+    def get_queryset(self):
+        return Favorites.objects.all().filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["snacks"] = Favorites.objects.all().filter(user=self.request.user)
+        return context
+
+class ListItemsView(LoginRequiredMixin, BaseView, ListView):
+    template_name = "list-items.html"
+
+    def get_queryset(self):
+        return Item.objects.all()
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["snacks"] = Item.objects.all()
+        return context
+
+class CartView(LoginRequiredMixin, BaseView, ListView):
+    template_name = "cart.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Item.objects.all()
+
+class RewardsView(LoginRequiredMixin, BaseView, ListView):
+    template_name = "rewards.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Item.objects.all()
+
+class PaymentView(LoginRequiredMixin, BaseView, ListView):
+    template_name = "payment-methods.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return PaymentMethod.objects.all().filter(user=self.request.user)
+
+class TransactionView(LoginRequiredMixin, BaseView, ListView):
+    template_name = "transaction-history.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Order.objects.all()
+
+class SupportView(LoginRequiredMixin, BaseView, TemplateView):
+    template_name = "support-submit.html"
+
+class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
+    template_name = "profile.html"
+
+class QueryView(LoginRequiredMixin, BaseView, TemplateView):
+    template_name = "search.html"

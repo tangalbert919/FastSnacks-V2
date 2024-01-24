@@ -9,16 +9,18 @@
         <form action="/payment-methods-add" method="post">
         {# This allows the user to enter their personal information for billing #}
           <div class="row">
+            {% if methods %}
             {% for method in methods %}
             <div class="row d-flex border border-dark rounded align-items-center mb-2">
               <h3>Payment method {{ forloop.index }}</h3>
-              <p>Card number: {{method.ccnum}}, Expiration Date: {{method.expmonth}}/{{method.expyear}}</p>
+              <p>Card number: {{method.card_no}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
             </div>
+            {% endfor %}
             {% else %}
             <div class="row d-flex border border-dark rounded align-items-center mb-2">
               <p align="center">It seems that you have no payment methods saved. Why not go ahead and add one?</p>
             </div>
-            {% endfor %}
+            {% endif %}
             <div class="col-6">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
