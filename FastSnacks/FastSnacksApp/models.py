@@ -43,8 +43,14 @@ class Item(models.Model):
     protein = models.IntegerField()
     sugar = models.IntegerField()
 
+    def __str__(self) -> str:
+        return self.name
+
 class VendingMachine(models.Model):
     location = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.location
 
 class Stock(models.Model):
     machine = models.OneToOneField(VendingMachine, on_delete=models.CASCADE)
