@@ -7,7 +7,9 @@ from django.views.generic import ListView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import *
+from .forms import ItemForm
 
 # Create your views here.
 # TODO: Have all views inherit this class
@@ -43,6 +45,7 @@ class LoginView(TemplateView):
         else:
             return render(request, "login.html", context={'error': '3'})
 
+@login_required
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
@@ -73,31 +76,59 @@ class RegisterView(TemplateView):
 
 class FavoritesView(LoginRequiredMixin, BaseView, ListView):
     template_name = "favorites.html"
+    model = Item
 
     def get_queryset(self):
-        return Favorites.objects.all().filter(user=self.request.user)
-
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["snacks"] = Favorites.objects.all().filter(user=self.request.user)
-        return context
+        favorites, _ = Favorites.objects.get_or_create(user=self.request.user)
+        return favorites.items.all()
 
 class ListItemsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "list-items.html"
-
-    def get_queryset(self):
-        return Item.objects.all()
-
+    model = Item
+    queryset = Item.objects.all()
+    
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["snacks"] = Item.objects.all()
+        context["vending"] = VendingMachine.objects.all()
         return context
 
 class CartView(LoginRequiredMixin, BaseView, ListView):
     template_name = "cart.html"
+    model = Item
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Item.objects.all()
+        cart, _ = Cart.objects.get_or_create(user=self.request.user)
+        return cart.items.all()
+
+@login_required
+def add_to_cart(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        cart.items.add(item)
+        return HttpResponseRedirect("cart")
+    return HttpResponseRedirect("cart")
+
+@login_required
+def add_favorites(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        favorites, _ = Favorites.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        favorites.items.add(item)
+        return HttpResponseRedirect("favorites")
+    return HttpResponseRedirect("favorites")
+
+@login_required
+def remove_favorites(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        favorites, _ = Favorites.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        favorites.items.remove(item)
+        return HttpResponseRedirect("favorites")
+    return HttpResponseRedirect("favorites")
 
 class RewardsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "rewards.html"

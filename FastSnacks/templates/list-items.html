@@ -7,7 +7,7 @@
 	<div class="col border-end border-dark">
 		<h2 class="text-center">Snacks</h2>
 		<div class="container">
-			{% for item in snacks %}
+			{% for item in object_list %}
 			<div class="row d-flex border border-dark rounded align-items-center mb-2">
 				<div class="col-1 border-end border-dark">
 					<img src="{{item.icon}}" class="w-100 p-2">
@@ -17,6 +17,7 @@
 					<p>${{item.price}} | Calories: {{item.calories}} | Carbs: {{item.carbs}} | Fat: {{item.fat}} | Protein: {{item.protein}} | Sugar: {{item.sugar}}</p>
 				</div>
 				<form action="/favorites-add" method="post" class="w-25">
+					{% csrf_token %}
 					<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">
 					<button class="btn btn-outline-secondary col-auto m-4 text-danger"
 						data-bs-toggle="tooltip"
@@ -28,6 +29,7 @@
 					</button>
 				</form>
 				<form action="/add-to-cart" method="post" class="w-25">
+					{% csrf_token %}
 					<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">
 					<button class="btn btn-outline-secondary col-auto m-4 text-danger"
 						data-bs-toggle="tooltip"

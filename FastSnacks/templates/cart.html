@@ -3,19 +3,17 @@
 
 {% block content %}
 <div class="container">
-    {% if cart %}
-    {% for item in cart %}
+    {% for item in object_list %}
     <div class="row d-flex border border-dark rounded align-items-center mb-2">
         <div class="col py-2">
             <h3>{{item.name}}</h3>
             <p>{{item.price}}</p>
         </div>
     </div>
-    {% endfor %}
-    {% else %}
+    {% empty %}
     <p>You currently do not have anything in your cart.</p>
-    {% endif %}
-    {% if cart.length > 0 %}
+    {% endfor %}
+    {% if object_list %}
     <a href="#" class="btn btn-outline-primary btn-align-center me-2">Checkout</a>
     {% endif %}
 </div>

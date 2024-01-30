@@ -66,4 +66,14 @@ class Order(models.Model):
 
 class Favorites(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    item = models.OneToOneField(Item, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Item, blank=True)
+
+    def __str__(self) -> str:
+        return self.user.get_username() + "'s favorites"
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Item, blank=True)
+
+    def __str__(self) -> str:
+        return self.user.get_username() + "'s cart"

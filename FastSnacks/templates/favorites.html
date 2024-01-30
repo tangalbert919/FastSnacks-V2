@@ -3,8 +3,7 @@
 
 {% block content %}
 <div class="container">
-	{% if snacks %}
-	{% for item in snacks %}
+	{% for item in object_list %}
 	<div class="row d-flex border border-dark rounded align-items-center mb-2">
 		<div class="col-1 border-end border-dark">
 			<img src="{{item.icon}}" class="w-100 p-2">
@@ -25,9 +24,8 @@
 			</button>
 		</form>
 	</div>
-	{% endfor %}
-	{% else %}
+	{% empty %}
 	<p>No favorite snacks yet.</p>
-	{% endif %}
+	{% endfor %}
 </div>
 {% endblock %}
