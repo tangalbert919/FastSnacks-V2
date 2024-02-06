@@ -13,6 +13,7 @@
 			<p>{{item.price}}</p>
 		</div>
 		<form action="/favorites-remove" method="post" class="w-25">
+			{% csrf_token %}
 			<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">
 			<button class="btn btn-outline-secondary col-auto m-4 text-danger"
 				data-bs-toggle="tooltip"
