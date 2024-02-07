@@ -82,6 +82,26 @@ class FavoritesView(LoginRequiredMixin, BaseView, ListView):
         favorites, _ = Favorites.objects.get_or_create(user=self.request.user)
         return favorites.items.all()
 
+@login_required
+def add_favorites(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        favorites, _ = Favorites.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        favorites.items.add(item)
+        return HttpResponseRedirect("favorites")
+    return HttpResponseRedirect("favorites")
+
+@login_required
+def remove_favorites(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        favorites, _ = Favorites.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        favorites.items.remove(item)
+        return HttpResponseRedirect("favorites")
+    return HttpResponseRedirect("favorites")
+
 class ListItemsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "list-items.html"
     model = Item
@@ -109,26 +129,6 @@ def add_to_cart(request):
         cart.items.add(item)
         return HttpResponseRedirect("cart")
     return HttpResponseRedirect("cart")
-
-@login_required
-def add_favorites(request):
-    form = ItemForm(request.POST)
-    if form.is_valid():
-        favorites, _ = Favorites.objects.get_or_create(user=request.user)
-        item = Item.objects.get(id=form.data['itemID'])
-        favorites.items.add(item)
-        return HttpResponseRedirect("favorites")
-    return HttpResponseRedirect("favorites")
-
-@login_required
-def remove_favorites(request):
-    form = ItemForm(request.POST)
-    if form.is_valid():
-        favorites, _ = Favorites.objects.get_or_create(user=request.user)
-        item = Item.objects.get(id=form.data['itemID'])
-        favorites.items.remove(item)
-        return HttpResponseRedirect("favorites")
-    return HttpResponseRedirect("favorites")
 
 class RewardsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "rewards.html"
