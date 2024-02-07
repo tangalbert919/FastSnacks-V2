@@ -10,6 +10,7 @@ urlpatterns = [
     path('list-items', views.ListItemsView.as_view(), name="list-items"),
     path('rewards', views.RewardsView.as_view(), name="rewards"),
     path('payment-methods', views.PaymentView.as_view(), name="payment-methods"),
+    path('payment-methods-add', views.add_payment_method, name="payment-methods-add"),
     path('transaction-history', views.TransactionView.as_view(), name="transaction-history"),
     path('support-submit', views.SupportView.as_view(), name="support-submit"),
     path('profile', views.ProfileView.as_view(), name="profile"),

@@ -8,19 +8,18 @@
       <div class="container">
         <form action="/payment-methods-add" method="post">
         {# This allows the user to enter their personal information for billing #}
+          {% csrf_token %}
           <div class="row">
-            {% if methods %}
-            {% for method in methods %}
+            {% for method in object_list %}
             <div class="row d-flex border border-dark rounded align-items-center mb-2">
-              <h3>Payment method {{ forloop.index }}</h3>
-              <p>Card number: {{method.card_no}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
+              <h3>Payment method {{ forloop.counter }}</h3>
+              <p>Card number: ****{{method.card_no|slice:"12:16"}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
             </div>
-            {% endfor %}
-            {% else %}
+            {% empty %}
             <div class="row d-flex border border-dark rounded align-items-center mb-2">
               <p align="center">It seems that you have no payment methods saved. Why not go ahead and add one?</p>
             </div>
-            {% endif %}
+            {% endfor %}
             <div class="col-6">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
@@ -53,23 +52,26 @@
                 <i class="fa fa-cc-mastercard" style="color:red;"></i>
                 <i class="fa fa-cc-discover" style="color:orange;"></i>
               </div>
-              <label for="cname">Name on Card</label>
-              <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-              <label for="ccnum">Credit card number</label>
-              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-              <label for="expmonth">Exp Month</label>
-              <input type="text" id="expmonth" name="expmonth" placeholder="September">
-
-              <div class="row">
-                <div class="col-6">
-                  <label for="expyear">Exp Year</label>
-                  <input type="text" id="expyear" name="expyear" placeholder="2018">
+              {% comment %}
+                <label for="cname">Name on Card</label>
+                <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                <label for="ccnum">Credit card number</label>
+                <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                <label for="expmonth">Exp Month</label>
+                <input type="text" id="expmonth" name="expmonth" placeholder="September">
+  
+                <div class="row">
+                  <div class="col-6">
+                    <label for="expyear">Exp Year</label>
+                    <input type="text" id="expyear" name="expyear" placeholder="2018">
+                  </div>
+                  <div class="col-6">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="352">
+                  </div>
                 </div>
-                <div class="col-6">
-                  <label for="cvv">CVV</label>
-                  <input type="text" id="cvv" name="cvv" placeholder="352">
-                </div>
-              </div>
+              {% endcomment %}
+              {{ form }}
             </div>
 
           </div>

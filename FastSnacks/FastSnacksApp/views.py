@@ -3,13 +3,13 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, FormView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import ItemForm
+from .forms import ItemForm, PaymentMethodForm
 
 # Create your views here.
 # TODO: Have all views inherit this class
@@ -136,11 +136,27 @@ class RewardsView(LoginRequiredMixin, BaseView, ListView):
     def get_queryset(self) -> QuerySet[Any]:
         return Item.objects.all()
 
-class PaymentView(LoginRequiredMixin, BaseView, ListView):
+class PaymentView(LoginRequiredMixin, BaseView, ListView, FormView):
     template_name = "payment-methods.html"
+    form_class = PaymentMethodForm
+    success_url = "/payment-methods"
 
     def get_queryset(self) -> QuerySet[Any]:
         return PaymentMethod.objects.all().filter(user=self.request.user)
+
+@login_required
+def add_payment_method(request):
+    form = PaymentMethodForm(request.POST)
+    if form.is_valid():
+        card_no = form.cleaned_data["ccnum"]
+        expmonth = form.cleaned_data["expmonth"]
+        expyear = form.cleaned_data["expyear"]
+        cvv = form.cleaned_data["cvv"]
+        PaymentMethod.objects.create(user=request.user, card_no=card_no, \
+                                     exp_month=expmonth, exp_year=expyear, 
+                                     security_code=cvv, account_bal=0.00).save()
+        return HttpResponseRedirect("payment-methods")
+    return HttpResponseRedirect("payment-methods")
 
 class TransactionView(LoginRequiredMixin, BaseView, ListView):
     template_name = "transaction-history.html"
