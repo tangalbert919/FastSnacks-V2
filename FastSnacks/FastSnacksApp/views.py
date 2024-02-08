@@ -170,5 +170,10 @@ class SupportView(LoginRequiredMixin, BaseView, TemplateView):
 class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "profile.html"
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["rewardPoints"] = Customer.objects.get(user=self.request.user).reward_points
+        return context
+
 class QueryView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "search.html"
