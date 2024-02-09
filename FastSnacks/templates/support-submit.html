@@ -5,14 +5,23 @@
 {% block content %}
 {% if success %}<div class="alert alert-success">Successfully submitted a support ticket.</div>{% endif %}
 <form action="/support" method="post">
-	<div class="input-group mb-2">
-		<span class="input-group-text" id="basic-addon1">Title</span>
-		<input type="text" name="title" class="form-control">
-	</div>
-	<div class="input-group mb-2">
-		<span class="input-group-text">Message</span>
-		<textarea rows="10" name="message" class="form-control"></textarea>
-	</div>
+	{% csrf_token %}
+	{% comment %}
+		<div class="input-group mb-2">
+			<span class="input-group-text" id="basic-addon1">Title</span>
+			<input type="text" name="title" class="form-control">
+		</div>
+		<div class="input-group mb-2">
+			<span class="input-group-text">Message</span>
+			<textarea rows="10" name="message" class="form-control"></textarea>
+		</div>
+	{% endcomment %}
+	{% for field in form %}
+		<div class="input-group mb-2">
+			<span class="input-group-text">{{ field.label_tag }}</span>
+			{{ field }}
+		</div>
+	{% endfor %}
 	<input type="submit" value="Submit" class="d-block m-auto">
 </form>
 {% endblock %}

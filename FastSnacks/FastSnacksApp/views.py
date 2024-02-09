@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import ItemForm, PaymentMethodForm
+from .forms import *
+import datetime
 
 # Create your views here.
 # TODO: Have all views inherit this class
@@ -164,8 +165,21 @@ class TransactionView(LoginRequiredMixin, BaseView, ListView):
     def get_queryset(self) -> QuerySet[Any]:
         return Order.objects.all()
 
-class SupportView(LoginRequiredMixin, BaseView, TemplateView):
+class SupportView(LoginRequiredMixin, BaseView, FormView):
     template_name = "support-submit.html"
+    form_class = SupportTicketForm
+    success_url = "/support-submit"
+
+@login_required
+def submit_support_ticket(request):
+    form = SupportTicketForm(request.POST)
+    if form.is_valid():
+        title = form.cleaned_data["title"]
+        message = form.cleaned_data["message"]
+        SupportTicket.objects.create(user=request.user, title=title, info=message, \
+                                     date=datetime.datetime.now()).save()
+        return HttpResponseRedirect("support-submit")
+    return HttpResponseRedirect("support-submit")
 
 class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "profile.html"

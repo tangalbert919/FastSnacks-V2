@@ -13,6 +13,7 @@ urlpatterns = [
     path('payment-methods-add', views.add_payment_method, name="payment-methods-add"),
     path('transaction-history', views.TransactionView.as_view(), name="transaction-history"),
     path('support-submit', views.SupportView.as_view(), name="support-submit"),
+    path('support', views.submit_support_ticket, name="support"),
     path('profile', views.ProfileView.as_view(), name="profile"),
     path('search', views.QueryView.as_view(), name="search"),
     path('cart', views.CartView.as_view(), name="cart"),
