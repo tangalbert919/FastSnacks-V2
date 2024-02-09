@@ -3,7 +3,7 @@
 
 {% block title %}Search Results{% endblock %}
 {% block content %}
-{% if hasQuery %}
+{% if snacks %}
 <h2 class="text-center">Query: {{query}}</h2>
 <div class="row border border-dark rounded">
 	<div class="col border-end border-dark">
@@ -26,7 +26,7 @@
 					<td>{{item.name}}</td>
 					<td>{{item.price}}</td>
 					<td>{{item.calories}}</td>
-					<td>{{item.carb}}</td>
+					<td>{{item.carbs}}</td>
 					<td>{{item.fat}}</td>
 					<td>{{item.protein}}</td>
 					<td>{{item.sugar}}</td>

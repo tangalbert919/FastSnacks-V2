@@ -191,3 +191,9 @@ class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
 
 class QueryView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "search.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("query")
+        context["snacks"] = Item.objects.all().filter(name__contains=query)
+        return context
