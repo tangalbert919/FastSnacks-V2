@@ -53,16 +53,16 @@ class VendingMachine(models.Model):
         return self.location
 
 class Stock(models.Model):
-    machine = models.OneToOneField(VendingMachine, on_delete=models.CASCADE)
-    item = models.OneToOneField(Item, on_delete=models.CASCADE)
+    machine = models.ForeignKey(VendingMachine, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    machine = models.OneToOneField(VendingMachine, on_delete=models.CASCADE)
-    item = models.OneToOneField(Item, on_delete=models.CASCADE)
+    machine = models.ForeignKey(VendingMachine, on_delete=models.CASCADE)
+    item = models.ManyToManyField(Item)
     quantity = models.IntegerField()
-    date = models.DateField()
+    date = models.DateTimeField()
 
 class Favorites(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
