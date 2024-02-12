@@ -6,20 +6,20 @@
 <div class="row">
     <div class="col-9">
       <div class="container">
+        {% for method in object_list %}
+        <div class="row d-flex border border-dark rounded align-items-center mb-2">
+          <h3>Payment method {{ forloop.counter }}</h3>
+          <p>Card number: ****{{method.card_no|slice:"12:16"}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
+        </div>
+        {% empty %}
+        <div class="row d-flex border border-dark rounded align-items-center mb-2">
+          <p align="center">It seems that you have no payment methods saved. Why not go ahead and add one?</p>
+        </div>
+        {% endfor %}
         <form action="/payment-methods-add" method="post">
         {# This allows the user to enter their personal information for billing #}
           {% csrf_token %}
           <div class="row">
-            {% for method in object_list %}
-            <div class="row d-flex border border-dark rounded align-items-center mb-2">
-              <h3>Payment method {{ forloop.counter }}</h3>
-              <p>Card number: ****{{method.card_no|slice:"12:16"}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
-            </div>
-            {% empty %}
-            <div class="row d-flex border border-dark rounded align-items-center mb-2">
-              <p align="center">It seems that you have no payment methods saved. Why not go ahead and add one?</p>
-            </div>
-            {% endfor %}
             <div class="col-6">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
@@ -47,10 +47,10 @@
               <h3>Payment</h3>
               <label for="fname">Accepted Cards</label>
               <div class="icon-container">
-                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                <i class="fa-brands fa-cc-visa" style="color:navy;"></i>
+                <i class="fa-brands fa-cc-amex" style="color:blue;"></i>
+                <i class="fa-brands fa-cc-mastercard" style="color:red;"></i>
+                <i class="fa-brands fa-cc-discover" style="color:orange;"></i>
               </div>
               {% comment %}
                 <label for="cname">Name on Card</label>
