@@ -4,7 +4,7 @@
 {% block title %}Submit a Support Ticket{% endblock %}
 {% block content %}
 {% if success %}<div class="alert alert-success">Successfully submitted a support ticket.</div>{% endif %}
-<form action="/support" method="post">
+<form action="/support-support" method="post">
 	{% csrf_token %}
 	{% comment %}
 		<div class="input-group mb-2">

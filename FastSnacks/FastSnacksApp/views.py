@@ -168,7 +168,7 @@ class TransactionView(LoginRequiredMixin, BaseView, ListView):
 class SupportView(LoginRequiredMixin, BaseView, FormView):
     template_name = "support-submit.html"
     form_class = SupportTicketForm
-    success_url = "/support-submit"
+    success_url = "/support"
 
 @login_required
 def submit_support_ticket(request):
