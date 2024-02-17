@@ -23,6 +23,7 @@
 			<div class="modal-footer">
 				<button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				<form action="/user-delete" method="post">
+					{% csrf_token %}
 					<button class="btn btn-danger">Delete Account</button>
 				</form>
 			</div>

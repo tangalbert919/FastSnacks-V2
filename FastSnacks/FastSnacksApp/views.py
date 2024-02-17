@@ -75,6 +75,13 @@ class RegisterView(TemplateView):
         except:
             return render(request, "register.html", context={'error': '4'})
 
+@login_required
+def delete_user(request):
+    user = User.objects.get(username=request.user.get_username())
+    logout(request)
+    user.delete()
+    return HttpResponseRedirect("/")
+
 class FavoritesView(LoginRequiredMixin, BaseView, ListView):
     template_name = "favorites.html"
     model = Item
