@@ -34,7 +34,7 @@
           </thead>
           {# This shows all the recent purchases made by the user #}
           <tbody>
-            {% for item in list %}
+            {% for item in object_list %}
             <tr class="transaction-row">
               <td class="transaction-date">{{item.date}}</td>
               <td>{{item.name}}</td>
