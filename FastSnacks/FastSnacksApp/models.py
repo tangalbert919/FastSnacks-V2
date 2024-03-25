@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 # Extend user model
@@ -25,6 +26,17 @@ class PaymentMethod(models.Model):
     exp_month = models.IntegerField()
     exp_year = models.IntegerField()
     account_bal = models.DecimalField(max_digits=7, decimal_places=2)
+
+class BillingInformation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fullname = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)
+    zip = models.IntegerField(validators=
+                              [MaxValueValidator(99999),
+                               MinValueValidator(1)])
 
 class SupportTicket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
