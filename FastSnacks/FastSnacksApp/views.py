@@ -138,6 +138,16 @@ def add_to_cart(request):
         return HttpResponseRedirect("cart")
     return HttpResponseRedirect("cart")
 
+@login_required
+def remove_from_cart(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        item = Item.objects.get(id=form.data['itemID'])
+        cart.items.remove(item)
+        return HttpResponseRedirect("cart")
+    return HttpResponseRedirect("cart")
+
 class RewardsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "rewards.html"
 

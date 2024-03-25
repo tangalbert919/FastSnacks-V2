@@ -9,6 +9,18 @@
             <h3>{{item.name}}</h3>
             <p>{{item.price}}</p>
         </div>
+        <form action="/cart-remove" method="post" class="w-25">
+			{% csrf_token %}
+			<input type="hidden" id="asdf" name="itemID" value="{{item.id}}">
+			<button class="btn btn-outline-secondary col-auto m-4 text-danger"
+				data-bs-toggle="tooltip"
+				data-bs-placement="bottom"
+				data-bs-custom-class="custom-tooltip"
+				data-bs-title="Remove from cart"
+			>
+				<i data-feather="trash-2"></i>
+			</button>
+		</form>
     </div>
     {% empty %}
     <p>You currently do not have anything in your cart.</p>
