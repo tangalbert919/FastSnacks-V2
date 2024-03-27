@@ -37,7 +37,7 @@
             {% for item in object_list %}
             <tr class="transaction-row">
               <td class="transaction-date">{{item.date}}</td>
-              <td>{{item.name}}</td>
+              <td>{{item.description}}</td>
               <td>{{item.quantity}}</td>
               <td class="transaction-amount">${{item.price}}</td>
             </tr>

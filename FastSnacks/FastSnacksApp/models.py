@@ -76,6 +76,18 @@ class Order(models.Model):
     quantity = models.IntegerField()
     date = models.DateTimeField()
 
+    def price(self):
+        total = 0.00
+        for item in self.item.all():
+            total += float(item.price)
+        return total
+
+    def description(self):
+        description = []
+        for item in self.item.all():
+            description.append(item.name)
+        return ', '.join(description)
+
 class Favorites(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Item, blank=True)
