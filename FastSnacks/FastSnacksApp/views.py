@@ -180,7 +180,7 @@ class TransactionView(LoginRequiredMixin, BaseView, ListView):
     template_name = "transaction-history.html"
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Order.objects.all()
+        return Order.objects.all().filter(user=self.request.user)
 
 class SupportView(LoginRequiredMixin, BaseView, FormView):
     template_name = "support-submit.html"
