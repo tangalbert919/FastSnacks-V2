@@ -11,6 +11,7 @@ urlpatterns = [
     path('rewards', views.RewardsView.as_view(), name="rewards"),
     path('payment-methods', views.PaymentView.as_view(), name="payment-methods"),
     path('payment-methods-add', views.add_payment_method, name="payment-methods-add"),
+    path('payment-methods-remove', views.remove_payment_method, name="payment-methods-remove"),
     path('transaction-history', views.TransactionView.as_view(), name="transaction-history"),
     path('support', views.SupportView.as_view(), name="support"),
     path('support-submit', views.submit_support_ticket, name="support-submit"),

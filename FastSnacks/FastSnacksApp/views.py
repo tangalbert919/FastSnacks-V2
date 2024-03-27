@@ -176,6 +176,14 @@ def add_payment_method(request):
         return HttpResponseRedirect("payment-methods")
     return HttpResponseRedirect("payment-methods")
 
+@login_required
+def remove_payment_method(request):
+    form = ItemForm(request.POST)
+    if form.is_valid():
+        item = PaymentMethod.objects.get(id=form.data['itemID']).delete()
+        return HttpResponseRedirect("payment-methods")
+    return HttpResponseRedirect("payment-methods")
+
 class TransactionView(LoginRequiredMixin, BaseView, ListView):
     template_name = "transaction-history.html"
 

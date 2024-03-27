@@ -8,8 +8,22 @@
       <div class="container">
         {% for method in object_list %}
         <div class="row d-flex border border-dark rounded align-items-center mb-2">
-          <h3>Payment method {{ forloop.counter }}</h3>
-          <p>Card number: ****{{method.card_no|slice:"12:16"}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
+          <div class="col py-2">
+            <h3>Payment method {{ forloop.counter }}</h3>
+            <p>Card number: ****{{method.card_no|slice:"12:16"}}, Expiration Date: {{method.exp_month}}/{{method.exp_year}}</p>
+          </div>
+          <form action="/payment-methods-remove" method="post" class="w-25">
+            {% csrf_token %}
+            <input type="hidden" id="asdf" name="itemID" value="{{method.id}}">
+            <button class="btn btn-outline-secondary col-auto m-4 text-danger"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              data-bs-custom-class="custom-tooltip"
+              data-bs-title="Remove payment method"
+            >
+              <i data-feather="trash-2"></i>
+            </button>
+          </form>
         </div>
         {% empty %}
         <div class="row d-flex border border-dark rounded align-items-center mb-2">
