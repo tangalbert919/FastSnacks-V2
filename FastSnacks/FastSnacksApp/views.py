@@ -204,6 +204,7 @@ class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["rewardPoints"] = Customer.objects.get(user=self.request.user).reward_points
+        context["searches"] = SearchHistory.objects.all().filter(user=self.request.user).order_by('-timestamp')
         return context
 
 class QueryView(LoginRequiredMixin, BaseView, TemplateView):
@@ -213,4 +214,6 @@ class QueryView(LoginRequiredMixin, BaseView, TemplateView):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get("query")
         context["snacks"] = Item.objects.all().filter(name__contains=query)
+        if self.request.user.is_authenticated:
+            SearchHistory.objects.create(user=self.request.user, query=query).save()
         return context

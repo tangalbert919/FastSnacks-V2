@@ -7,7 +7,7 @@
 <h2>Search History</h2>
 <ul>
 	{% for query in searches %}
-	<li>{{query}}</li>
+	<li>{{query.query}} - {{query.timestamp}}</li>
 	{% endfor %}
 </ul>
 <h2>Account Settings</h2>
