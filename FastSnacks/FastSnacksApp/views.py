@@ -13,7 +13,6 @@ from .forms import *
 import datetime
 
 # Create your views here.
-# TODO: Have all views inherit this class
 class BaseView(View):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -151,9 +150,11 @@ def remove_from_cart(request):
 class RewardsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "rewards.html"
 
+    # TODO: Add actual rewards
     def get_queryset(self) -> QuerySet[Any]:
         return Item.objects.all()
 
+# TODO: Add handling for removing payment methods.
 class PaymentView(LoginRequiredMixin, BaseView, ListView, FormView):
     template_name = "payment-methods.html"
     form_class = PaymentMethodForm
