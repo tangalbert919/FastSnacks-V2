@@ -102,15 +102,14 @@
         <h4>Cart
           <span class="price" style="color:black">
             <i class="fa fa-shopping-cart"></i>
-            <b>4</b>
+            <b>{{ cart.count }}</b>
           </span>
         </h4>
-        <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-        <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-        <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-        <p><a href="#">Product 4</a> <span class="price">$2</span></p>
+        {% for item in cart %}
+        <p><a href="#">{{ item.name }}</a> <span class="price">${{ item.price }}</span></p>
+        {% endfor %}
         <hr>
-        <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+        <p>Total <span class="price" style="color:black"><b>${{ cart_price }}</b></span></p>
       </div>
     </div>
 </div>

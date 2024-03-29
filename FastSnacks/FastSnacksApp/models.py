@@ -107,5 +107,11 @@ class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Item, blank=True)
 
+    def price(self):
+        total = 0.00
+        for item in self.items.all():
+            total += float(item.price)
+        return total
+
     def __str__(self) -> str:
         return self.user.get_username() + "'s cart"

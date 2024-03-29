@@ -163,6 +163,13 @@ class PaymentView(LoginRequiredMixin, BaseView, ListView, FormView):
     def get_queryset(self) -> QuerySet[Any]:
         return PaymentMethod.objects.all().filter(user=self.request.user)
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        cart = Cart.objects.get(user=self.request.user)
+        context["cart"] = cart.items.all()
+        context["cart_price"] = cart.price
+        return context
+
 @login_required
 def add_payment_method(request):
     form = PaymentMethodForm(request.POST)
