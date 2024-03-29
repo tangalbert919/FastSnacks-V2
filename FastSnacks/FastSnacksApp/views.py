@@ -127,6 +127,12 @@ class CartView(LoginRequiredMixin, BaseView, ListView):
         cart, _ = Cart.objects.get_or_create(user=self.request.user)
         return cart.items.all()
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        cart, _ = Cart.objects.get_or_create(user=self.request.user)
+        context["price"] = cart.price
+        return context
+
 @login_required
 def add_to_cart(request):
     form = ItemForm(request.POST)

@@ -26,7 +26,10 @@
     <p>You currently do not have anything in your cart.</p>
     {% endfor %}
     {% if object_list %}
-    <a href="#" class="btn btn-outline-primary btn-align-center me-2">Checkout</a>
+    <div style="float: right;">
+        <b>Total: ${{ price }}</b>
+        <a href="#" class="btn btn-outline-primary btn-align-center me-2">Checkout</a>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
