@@ -10,6 +10,9 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reward_points = models.IntegerField(default=0)
 
+    def __str__(self) -> str:
+        return self.user.get_username()
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -26,6 +29,9 @@ class PaymentMethod(models.Model):
     exp_month = models.IntegerField()
     exp_year = models.IntegerField()
     account_bal = models.DecimalField(max_digits=7, decimal_places=2)
+
+    def __str__(self) -> str:
+        return self.user.get_username() + str(self.pk)
 
 class BillingInformation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
