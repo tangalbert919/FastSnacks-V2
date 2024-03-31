@@ -23,4 +23,5 @@ urlpatterns = [
     path('favorites-add', views.add_favorites, name="favorites-add"),
     path('favorites-remove', views.remove_favorites, name="favorites-remove"),
     path('user-delete', views.delete_user, name="user-delete"),
+    path('checkout', views.CheckoutView.as_view(), name="checkout"),
 ]

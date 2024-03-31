@@ -239,3 +239,11 @@ class QueryView(LoginRequiredMixin, BaseView, TemplateView):
         if self.request.user.is_authenticated:
             SearchHistory.objects.create(user=self.request.user, query=query).save()
         return context
+
+class CheckoutView(LoginRequiredMixin, BaseView, ListView, FormView):
+    template_name = "checkout.html"
+    form_class = CheckoutForm
+    success_url = "/"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return PaymentMethod.objects.all().filter(user=self.request.user)
