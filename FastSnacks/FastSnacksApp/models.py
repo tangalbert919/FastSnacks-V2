@@ -121,3 +121,7 @@ class Cart(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_username() + "'s cart"
+
+class Reward(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
