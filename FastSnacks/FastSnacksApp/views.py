@@ -155,12 +155,9 @@ def remove_from_cart(request):
 
 class RewardsView(LoginRequiredMixin, BaseView, ListView):
     template_name = "rewards.html"
+    model = Reward
+    queryset = Reward.objects.all()
 
-    # TODO: Add actual rewards
-    def get_queryset(self) -> QuerySet[Any]:
-        return Item.objects.all()
-
-# TODO: Add handling for removing payment methods.
 class PaymentView(LoginRequiredMixin, BaseView, ListView, FormView):
     template_name = "payment-methods.html"
     form_class = PaymentMethodForm

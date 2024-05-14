@@ -7,9 +7,10 @@
 {# Each row of the rewards list should be made up of four columns. #}
 <div class="container">
 	<div class="row mb-2">
-		<div class="col">
+		{% for reward in object_list %}
+		<div class="col-sm-6 col-md-3">
 			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
+				<h2 class="text-center border-bottom border-dark border-2">{{reward.item.name}}</h2>
 				<div>
 					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
 				</div>
@@ -28,119 +29,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="col">
-			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
-				<div>
-					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
-				</div>
-				<div class="row border-top border-dark text-center">
-					<div class="col fw-bold p-2">
-						Quantity
-					</div>
-					<div class="col-auto border-start border-dark text-center p-2">
-						123
-					</div>
-					<div class="col fw-bold border-start border-dark text-center p-2">
-						<a href="/">
-							<i data-feather="shopping-cart"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
-				<div>
-					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
-				</div>
-				<div class="row border-top border-dark text-center">
-					<div class="col fw-bold p-2">
-						Quantity
-					</div>
-					<div class="col-auto border-start border-dark text-center p-2">
-						123
-					</div>
-					<div class="col fw-bold border-start border-dark text-center p-2">
-						<a href="/">
-							<i data-feather="shopping-cart"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
-				<div>
-					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
-				</div>
-				<div class="row border-top border-dark text-center">
-					<div class="col fw-bold p-2">
-						Quantity
-					</div>
-					<div class="col-auto border-start border-dark text-center p-2">
-						123
-					</div>
-					<div class="col fw-bold border-start border-dark text-center p-2">
-						<a href="/">
-							<i data-feather="shopping-cart"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col">
-			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
-				<div>
-					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
-				</div>
-				<div class="row border-top border-dark text-center">
-					<div class="col fw-bold p-2">
-						Quantity
-					</div>
-					<div class="col-auto border-start border-dark text-center p-2">
-						123
-					</div>
-					<div class="col fw-bold border-start border-dark text-center p-2">
-						<a href="/">
-							<i data-feather="shopping-cart"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="container-fluid border border-dark rounded">
-				<h2 class="text-center border-bottom border-dark border-2">Example Snack</h2>
-				<div>
-					<img src="{% static 'img/fastsnacks.png' %}" class="w-100 p-2">
-				</div>
-				<div class="row border-top border-dark text-center">
-					<div class="col fw-bold p-2">
-						Quantity
-					</div>
-					<div class="col-auto border-start border-dark text-center p-2">
-						123
-					</div>
-					<div class="col fw-bold border-start border-dark text-center p-2">
-						<a href="/">
-							<i data-feather="shopping-cart"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-
-		</div>
-		<div class="col">
-
-		</div>
+		{% empty %}
+		<p>There are currently no rewards available.</p>
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}
