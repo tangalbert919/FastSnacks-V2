@@ -220,6 +220,7 @@ class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
         context = super().get_context_data(**kwargs)
         context["rewardPoints"] = Customer.objects.get(user=self.request.user).reward_points
         context["searches"] = SearchHistory.objects.all().filter(user=self.request.user).order_by('-timestamp')
+        context["support"] = SupportTicket.objects.all().filter(user=self.request.user).order_by('-date')
         return context
 
 class QueryView(LoginRequiredMixin, BaseView, TemplateView):

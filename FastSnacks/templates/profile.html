@@ -10,6 +10,12 @@
 	<li>{{query.query}} - {{query.timestamp}}</li>
 	{% endfor %}
 </ul>
+<h2>Support tickets</h2>
+<ul>
+	{% for ticket in support %}
+	<li>{{ticket.title}} - {{ticket.date}}</li>
+	{% endfor %}
+</ul>
 <h2>Account Settings</h2>
 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm">Deactivate Account</button>
 <div class="modal fade" id="confirm" tabindex="-1">
