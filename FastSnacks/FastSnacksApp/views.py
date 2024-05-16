@@ -214,8 +214,8 @@ def submit_support_ticket(request):
         message = form.cleaned_data["message"]
         SupportTicket.objects.create(user=request.user, title=title, info=message, \
                                      date=datetime.datetime.now()).save()
-        return HttpResponseRedirect("support-submit")
-    return HttpResponseRedirect("support-submit")
+        return HttpResponseRedirect("support")
+    return HttpResponseRedirect("support")
 
 class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "profile.html"
