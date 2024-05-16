@@ -206,16 +206,12 @@ class SupportView(LoginRequiredMixin, BaseView, FormView):
     form_class = SupportTicketForm
     success_url = "/support"
 
-@login_required
-def submit_support_ticket(request):
-    form = SupportTicketForm(request.POST)
-    if form.is_valid():
+    def form_valid(self, form):
         title = form.cleaned_data["title"]
         message = form.cleaned_data["message"]
-        SupportTicket.objects.create(user=request.user, title=title, info=message, \
+        SupportTicket.objects.create(user=self.request.user, title=title, info=message, \
                                      date=datetime.datetime.now()).save()
-        return HttpResponseRedirect("support")
-    return HttpResponseRedirect("support")
+        return super().form_valid(form)
 
 class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "profile.html"
