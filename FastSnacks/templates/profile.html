@@ -13,7 +13,7 @@
 <h2>Support tickets</h2>
 <ul>
 	{% for ticket in support %}
-	<li>{{ticket.title}} - {{ticket.date}}</li>
+	<li><a href="/support/{{ ticket.id }}">{{ticket.title}} - {{ticket.date}}</a></li>
 	{% endfor %}
 </ul>
 <h2>Account Settings</h2>

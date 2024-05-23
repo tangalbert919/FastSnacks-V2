@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Support Ticket{% endblock %}
+{% block content %}
+<div class="container">
+    {% if ticket.resolved %}
+        <div class="alert alert-success">
+            <p>This ticket has been resolved.</p>
+        </div>
+    {% else %}
+        <div class="alert alert-danger">
+            <p>This ticket has not been resolved.</p>
+        </div>
+    {% endif %}
+    <h2>Title</h2>
+    <p>{{ ticket.title }}</p>
+    <h2>Info</h2>
+    <p>{{ ticket.info }}</p>
+    <h3>Filed on {{ ticket.date }}</h3>
+    <a href="/profile" class="btn btn-primary btn-align-center me-2">Back to profile</a>
+</div>
+{% endblock %}

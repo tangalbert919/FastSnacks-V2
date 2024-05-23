@@ -14,6 +14,7 @@ urlpatterns = [
     path('payment-methods-remove', views.remove_payment_method, name="payment-methods-remove"),
     path('transaction-history', views.TransactionView.as_view(), name="transaction-history"),
     path('support', views.SupportView.as_view(), name="support"),
+    path('support/<int:pk>', views.SupportTicketView.as_view(), name="support-ticket"),
     path('profile', views.ProfileView.as_view(), name="profile"),
     path('search', views.QueryView.as_view(), name="search"),
     path('cart', views.CartView.as_view(), name="cart"),

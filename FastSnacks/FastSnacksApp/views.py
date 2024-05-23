@@ -1,6 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, FormView
@@ -212,6 +212,16 @@ class SupportView(LoginRequiredMixin, BaseView, FormView):
         SupportTicket.objects.create(user=self.request.user, title=title, info=message, \
                                      date=datetime.datetime.now()).save()
         return super().form_valid(form)
+
+class SupportTicketView(LoginRequiredMixin, BaseView, TemplateView):
+    template_name = "support-ticket.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        print(kwargs)
+        context = super().get_context_data(**kwargs)
+        ticket = get_object_or_404(SupportTicket, id=self.kwargs['pk'])
+        context["ticket"] = ticket
+        return context
 
 class ProfileView(LoginRequiredMixin, BaseView, TemplateView):
     template_name = "profile.html"
