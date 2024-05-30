@@ -8,8 +8,14 @@
 <ul>
 	{% for query in searches %}
 	<li>{{query.query}} - {{query.timestamp}}</li>
+	{% empty %}
+	<p>You have no searches.</p>
 	{% endfor %}
 </ul>
+<form action="/delete-search-history" method="post">
+	{% csrf_token %}
+	<button class="btn btn-danger">Delete search history</button>
+</form>
 <h2>Support tickets</h2>
 <ul>
 	{% for ticket in support %}

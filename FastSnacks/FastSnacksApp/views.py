@@ -244,6 +244,12 @@ class QueryView(LoginRequiredMixin, BaseView, TemplateView):
             SearchHistory.objects.create(user=self.request.user, query=query).save()
         return context
 
+@login_required
+def delete_search_history(request):
+    search_history = SearchHistory.objects.all().filter(user=request.user)
+    search_history.delete()
+    return HttpResponseRedirect("/profile")
+
 class CheckoutView(LoginRequiredMixin, BaseView, ListView, FormView):
     template_name = "checkout.html"
     form_class = CheckoutForm
