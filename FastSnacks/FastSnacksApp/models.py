@@ -24,6 +24,16 @@ def save_user_profile(sender, instance, **kwargs):
 
 class PaymentMethod(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Billing address
+    fullname = models.CharField(max_length=255, null=False)
+    email = models.CharField(max_length=255, null=False)
+    address = models.CharField(max_length=255, null=False)
+    city = models.CharField(max_length=255, null=False)
+    state = models.CharField(max_length=2, null=False)
+    zip = models.IntegerField(validators=
+                              [MaxValueValidator(99999),
+                               MinValueValidator(1)])
+    # Credit card information
     card_no = models.CharField(max_length=16, null=False)
     security_code = models.CharField(max_length=4, null=False)
     exp_month = models.IntegerField()
@@ -32,17 +42,6 @@ class PaymentMethod(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_username() + str(self.pk)
-
-class BillingInformation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    fullname = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=2)
-    zip = models.IntegerField(validators=
-                              [MaxValueValidator(99999),
-                               MinValueValidator(1)])
 
 class SearchHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
