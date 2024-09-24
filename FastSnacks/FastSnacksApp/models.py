@@ -125,3 +125,4 @@ class Cart(models.Model):
 class Reward(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
