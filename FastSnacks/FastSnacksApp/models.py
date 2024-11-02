@@ -1,11 +1,21 @@
+"""
+Models module for FastSnacks.
+All non-admin models must be created here. Any modifications made requires
+making migrations using the following command:
+
+    python manage.py makemigrations
+
+Failure to do so will result in Django runtime errors.
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
-# Extend user model
+# Extend user model with additional parameters.
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reward_points = models.IntegerField(default=0)
@@ -22,6 +32,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.customer.save()
 
+# TODO: Encrypt information for these next two models.
 class PaymentMethod(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Billing address
@@ -43,6 +54,7 @@ class PaymentMethod(models.Model):
     def __str__(self) -> str:
         return self.user.get_username() + str(self.pk)
 
+# TODO: Delete old search history after a certain amount of queries is reached.
 class SearchHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     query = models.CharField(max_length=255)
